@@ -40,7 +40,7 @@ export default function AttendanceClient({
   });
   const [saving, setSaving] = useState(false);
 
-  const canMark = ['SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL', 'TEACHER'].includes(user.role);
+  const canMark = ['SUPER_ADMIN', 'SCHOOL_ADMIN', 'TEACHER'].includes(user.role);
 
   const handleClassChange = async (classId: string) => {
     setSelectedClassId(classId);

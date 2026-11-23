@@ -106,22 +106,22 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
 
           <div className="flex flex-wrap items-center gap-3">
             {isSuperOrAdmin && (
-              <>
-                <Link
-                  href="/students"
-                  className="px-4 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs hover:bg-slate-100 transition-all shadow-md flex items-center gap-1.5"
-                >
-                  <PlusCircle className="w-4 h-4 text-indigo-600" />
-                  Add Student
-                </Link>
-                <Link
-                  href="/attendance"
-                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 font-semibold text-xs text-white transition-all backdrop-blur-sm flex items-center gap-1.5"
-                >
-                  <Calendar className="w-4 h-4" />
-                  Mark Attendance
-                </Link>
-              </>
+              <Link
+                href="/students"
+                className="px-4 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs hover:bg-slate-100 transition-all shadow-md flex items-center gap-1.5"
+              >
+                <PlusCircle className="w-4 h-4 text-indigo-600" />
+                Add Student
+              </Link>
+            )}
+            {(user.role === 'SUPER_ADMIN' || user.role === 'SCHOOL_ADMIN' || user.role === 'TEACHER') && (
+              <Link
+                href="/attendance"
+                className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 font-semibold text-xs text-white transition-all backdrop-blur-sm flex items-center gap-1.5"
+              >
+                <Calendar className="w-4 h-4" />
+                Mark Attendance
+              </Link>
             )}
             {user.role === 'STUDENT' && (
               <Link

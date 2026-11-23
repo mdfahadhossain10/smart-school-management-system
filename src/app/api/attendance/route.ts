@@ -43,7 +43,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const session = await getSession();
-    if (!session || !['SUPER_ADMIN', 'SCHOOL_ADMIN', 'PRINCIPAL', 'TEACHER'].includes(session.role)) {
+    if (!session || !['SUPER_ADMIN', 'SCHOOL_ADMIN', 'TEACHER'].includes(session.role)) {
       return NextResponse.json({ error: 'Unauthorized to mark attendance' }, { status: 403 });
     }
 
