@@ -25,6 +25,7 @@ import {
   UserCheck,
 } from 'lucide-react';
 import { Role } from '@/lib/auth';
+import { useLanguage } from '@/lib/i18n';
 
 interface SidebarProps {
   userRole: Role;
@@ -167,6 +168,7 @@ const navGroups: NavGroup[] = [
 export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { t } = useLanguage();
 
   return (
     <>
@@ -193,10 +195,10 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
             {!isCollapsed && (
               <div className="flex flex-col">
                 <span className="font-extrabold text-sm tracking-tight text-white leading-none">
-                  Smart School
+                  {t('Smart School')}
                 </span>
                 <span className="text-[10px] text-indigo-400 font-semibold tracking-wider uppercase mt-1">
-                  Management ERP
+                  {t('Management ERP')}
                 </span>
               </div>
             )}
@@ -215,7 +217,7 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-[11px] font-semibold tracking-wider uppercase text-slate-300">
-                {userRole.replace('_', ' ')}
+                {t(userRole, userRole.replace('_', ' '))}
               </span>
             </div>
           </div>
@@ -231,7 +233,7 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
               <div key={groupIdx} className="space-y-1">
                 {!isCollapsed && (
                   <h4 className="px-3 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-                    {group.group}
+                    {t(group.group)}
                   </h4>
                 )}
                 {filteredItems.map((item) => {
@@ -248,10 +250,10 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
                           ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                           : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                       }`}
-                      title={isCollapsed ? item.name : undefined}
+                      title={isCollapsed ? t(item.name) : undefined}
                     >
                       <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'}`} />
-                      {!isCollapsed && <span className="truncate">{item.name}</span>}
+                      {!isCollapsed && <span className="truncate">{t(item.name)}</span>}
                       {item.badge && !isCollapsed && (
                         <span className="ml-auto text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">
                           {item.badge}
@@ -276,8 +278,8 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
             </div>
             {!isCollapsed && (
               <div className="flex flex-col truncate">
-                <span className="text-xs font-semibold text-slate-200">My Profile</span>
-                <span className="text-[10px] text-slate-400">Account settings</span>
+                <span className="text-xs font-semibold text-slate-200">{t('My Profile')}</span>
+                <span className="text-[10px] text-slate-400">{t('Account settings')}</span>
               </div>
             )}
           </Link>

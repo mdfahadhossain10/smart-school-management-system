@@ -38,6 +38,7 @@ import {
 import StatCard from '@/components/ui/StatCard';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { Role } from '@/lib/auth';
+import { useLanguage } from '@/lib/i18n';
 
 interface DashboardClientProps {
   user: {
@@ -78,6 +79,7 @@ const gradeDistribution = [
 export default function DashboardClient({ user, stats }: DashboardClientProps) {
   const isSuperOrAdmin =
     user.role === 'SUPER_ADMIN' || user.role === 'SCHOOL_ADMIN' || user.role === 'PRINCIPAL';
+  const { t, toBn } = useLanguage();
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
@@ -87,10 +89,10 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/10 text-xs font-semibold text-indigo-200">
               <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              Academic Term 2026-2027 • Live Session
+              {t('academicSession')} • {t('systemOperational')}
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Welcome back, {user.name}
+              {t('welcomeBack')}, {user.name}
             </h1>
             <p className="text-sm text-indigo-200/90 max-w-xl">
               {user.role === 'SUPER_ADMIN' && 'Here is your central operational overview of institutional metrics, enrollment, and finances.'}
@@ -111,7 +113,7 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
                 className="px-4 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs hover:bg-slate-100 transition-all shadow-md flex items-center gap-1.5"
               >
                 <PlusCircle className="w-4 h-4 text-indigo-600" />
-                Add Student
+                {t('Add Student', 'Add Student')}
               </Link>
             )}
             {(user.role === 'SUPER_ADMIN' || user.role === 'SCHOOL_ADMIN' || user.role === 'TEACHER') && (
@@ -120,7 +122,7 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
                 className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 font-semibold text-xs text-white transition-all backdrop-blur-sm flex items-center gap-1.5"
               >
                 <Calendar className="w-4 h-4" />
-                Mark Attendance
+                {t('Mark Attendance')}
               </Link>
             )}
             {user.role === 'STUDENT' && (
@@ -129,7 +131,7 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
                 className="px-4 py-2.5 rounded-xl bg-white text-indigo-950 font-bold text-xs hover:bg-slate-100 transition-all shadow-md flex items-center gap-1.5"
               >
                 <Award className="w-4 h-4 text-indigo-600" />
-                View Report Card
+                {t('View Report Card')}
               </Link>
             )}
           </div>
@@ -139,40 +141,40 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
       {/* Primary KPI Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <StatCard
-          title="Total Students"
-          value={stats.studentCount.toString()}
+          title={t('Total Students')}
+          value={toBn(stats.studentCount)}
           change="+12% this term"
           isPositive={true}
           icon={GraduationCap}
           color="indigo"
-          subtitle="Enrolled across Grades 8-12"
+          subtitle={t('Enrolled across Grades 8-12')}
         />
         <StatCard
-          title="Active Faculty"
-          value={stats.teacherCount.toString()}
+          title={t('Active Faculty')}
+          value={toBn(stats.teacherCount)}
           change="Full Capacity"
           isPositive={true}
           icon={Users}
           color="purple"
-          subtitle="All academic departments"
+          subtitle={t('All academic departments')}
         />
         <StatCard
-          title="Revenue Collected"
+          title={t('Revenue Collected')}
           value={formatCurrency(stats.totalRevenue)}
           change="+18.4%"
           isPositive={true}
           icon={DollarSign}
           color="emerald"
-          subtitle="Tuition & registration fees"
+          subtitle={t('Total fees settled this year')}
         />
         <StatCard
-          title="Pending Fees"
+          title={t('Pending Fees')}
           value={formatCurrency(stats.totalPendingFees)}
           change="Due this month"
           isPositive={false}
           icon={CreditCard}
           color="rose"
-          subtitle="Invoices pending payment"
+          subtitle={t('Outstanding invoice balances')}
         />
       </div>
 
@@ -255,20 +257,20 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 gap-2">
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">
-                Monthly Income & Expenditure
+                {t('Monthly Income & Expenditure')}
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Fiscal trajectory over past 6 months (in BDT)
+                {t('Fiscal trajectory over past 6 months (in BDT)')}
               </p>
             </div>
             <div className="flex items-center gap-4 text-xs font-semibold">
               <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400">
                 <span className="w-2.5 h-2.5 rounded-full bg-indigo-600" />
-                Income
+                {t('Income')}
               </span>
               <span className="flex items-center gap-1.5 text-rose-500">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                Expenses
+                {t('Expenses')}
               </span>
             </div>
           </div>
@@ -328,10 +330,10 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
         <div className="bg-white dark:bg-slate-900 p-6 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
           <div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              Weekly Attendance %
+              {t('Weekly Attendance Breakdown', 'Weekly Attendance %')}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              School-wide average presence by day
+              {t('Across All Student Grades', 'School-wide average presence by day')}
             </p>
           </div>
 

@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { School, Lock, Mail, ArrowRight, ShieldAlert, Sparkles, CheckCircle2 } from 'lucide-react';
+import { School, Lock, Mail, ArrowRight, ShieldAlert, Sparkles, CheckCircle2, Languages } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 
 const DEMO_ACCOUNTS = [
   { role: 'Super Admin', email: 'superadmin@smartacademy.edu', pass: 'Admin@123', color: 'bg-indigo-50 border-indigo-200 text-indigo-700' },
@@ -17,6 +18,7 @@ const DEMO_ACCOUNTS = [
 
 export default function LoginPage() {
   const router = useRouter();
+  const { lang, toggleLang, t } = useLanguage();
   const [email, setEmail] = useState('superadmin@smartacademy.edu');
   const [password, setPassword] = useState('Admin@123');
   const [loading, setLoading] = useState(false);
@@ -56,6 +58,18 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4 relative overflow-hidden">
+      {/* Top Language Toggle */}
+      <div className="absolute top-5 right-5 z-20">
+        <button
+          onClick={toggleLang}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-xs font-bold text-slate-200 transition-all shadow-md backdrop-blur-md"
+          title={lang === 'en' ? 'বাংলা ভাষায় পরিবর্তন করুন' : 'Switch to English'}
+        >
+          <Languages className="w-4 h-4 text-indigo-400" />
+          <span>{lang === 'en' ? 'বাংলা (Bangla)' : 'English (EN)'}</span>
+        </button>
+      </div>
+
       {/* Background Decorative Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-indigo-600/20 to-purple-600/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -66,10 +80,10 @@ export default function LoginPage() {
             <School className="w-8 h-8" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Smart School ERP
+            {t('Smart School')} ERP
           </h1>
           <p className="text-sm text-slate-400 mt-2">
-            Next-Gen School Management & Academic Intelligence
+            {t('Enterprise Grade Modern School Management and ERP Platform')}
           </p>
         </div>
 
@@ -85,7 +99,7 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Email Address
+                {t('Email Address')}
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -102,9 +116,9 @@ export default function LoginPage() {
 
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-semibold text-slate-300">Password</label>
+                <label className="text-xs font-semibold text-slate-300">{t('Password')}</label>
                 <a href="/forgot-password" className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">
-                  Forgot?
+                  {lang === 'bn' ? 'ভুলে গেছেন?' : 'Forgot?'}
                 </a>
               </div>
               <div className="relative">
@@ -125,7 +139,7 @@ export default function LoginPage() {
               disabled={loading}
               className="w-full mt-2 py-3 px-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition-all disabled:opacity-50"
             >
-              {loading ? 'Authenticating...' : 'Sign In to Dashboard'}
+              {loading ? t('Signing in...') : t('Sign In to Dashboard')}
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -135,7 +149,7 @@ export default function LoginPage() {
             <div className="flex items-center gap-1.5 mb-3">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                Quick Demo Role Selector (1-Click)
+                {t('Instant 1-Click Role Testing', 'Quick Demo Role Selector (1-Click)')}
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -150,7 +164,7 @@ export default function LoginPage() {
                       : 'bg-slate-800/60 border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white'
                   }`}
                 >
-                  {acc.role}
+                  {t(acc.role, acc.role)}
                 </button>
               ))}
             </div>

@@ -13,8 +13,10 @@ import {
   Shield,
   Check,
   ChevronDown,
+  Languages,
 } from 'lucide-react';
 import { Role } from '@/lib/auth';
+import { useLanguage } from '@/lib/i18n';
 
 interface NavbarProps {
   user: {
@@ -40,10 +42,12 @@ const ALL_ROLES: { role: Role; label: string; desc: string }[] = [
 
 export default function Navbar({ user, onMenuClick }: NavbarProps) {
   const router = useRouter();
+  const { lang, setLang, toggleLang, t } = useLanguage();
   const [isDark, setIsDark] = useState(false);
   const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -112,7 +116,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
             <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search students, teachers, classes, records... (Press / to focus)"
+              placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800/60 border border-transparent focus:border-indigo-500 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-slate-100 placeholder-slate-400 outline-none transition-all"
@@ -122,6 +126,60 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
 
         {/* Right Action Icons & Role Switcher */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* Language Switcher (EN / বাংলা) */}
+          <div className="relative">
+            <button
+              onClick={() => setIsLangDropdownOpen(!isLangDropdownOpen)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700/80 text-xs font-bold text-slate-800 dark:text-slate-100 transition-all shadow-sm group"
+              title={lang === 'en' ? 'বাংলা ভাষায় পরিবর্তন করুন' : 'Switch to English'}
+            >
+              <Languages className="w-4 h-4 text-indigo-600 dark:text-indigo-400 transition-transform group-hover:rotate-12" />
+              <span className="font-semibold">{lang === 'en' ? 'English' : 'বাংলা'}</span>
+              <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+            </button>
+
+            {isLangDropdownOpen && (
+              <div
+                className="absolute right-0 mt-2 w-40 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 py-1.5 z-50 animate-in fade-in slide-in-from-top-2"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="px-3 py-1.5 border-b border-slate-100 dark:border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  Select Language
+                </div>
+                <button
+                  onClick={() => {
+                    setLang('en');
+                    setIsLangDropdownOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${
+                    lang === 'en' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-700 dark:text-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span>🇬🇧</span>
+                    <span>English</span>
+                  </span>
+                  {lang === 'en' && <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
+                </button>
+                <button
+                  onClick={() => {
+                    setLang('bn');
+                    setIsLangDropdownOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors ${
+                    lang === 'bn' ? 'text-indigo-600 dark:text-indigo-400 font-bold bg-indigo-50/50 dark:bg-indigo-950/30' : 'text-slate-700 dark:text-slate-300'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <span>🇧🇩</span>
+                    <span>বাংলা (Bangla)</span>
+                  </span>
+                  {lang === 'bn' && <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
+                </button>
+              </div>
+            )}
+          </div>
+
           {/* Quick Demo Role Switcher Dropdown */}
           <div className="relative">
             <button
@@ -130,8 +188,8 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
               title="Test any of the 8 user roles instantly"
             >
               <Shield className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-              <span className="hidden md:inline">Role:</span>
-              <span className="font-bold">{user.role.replace('_', ' ')}</span>
+              <span className="hidden md:inline">{t('Role:')}</span>
+              <span className="font-bold">{t(user.role, user.role.replace('_', ' '))}</span>
               <ChevronDown className="w-3.5 h-3.5 opacity-70" />
             </button>
 
@@ -142,10 +200,10 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
               >
                 <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
                   <p className="text-xs font-bold text-slate-800 dark:text-slate-100 uppercase tracking-wider">
-                    Switch Active Role
+                    {t('Switch Active Role')}
                   </p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                    Experience all 8 distinct dashboard views
+                    {t('Experience all 8 distinct dashboard views')}
                   </p>
                 </div>
                 <div className="max-h-64 overflow-y-auto py-1">
@@ -160,8 +218,8 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
                       }`}
                     >
                       <div>
-                        <p className="font-semibold">{r.label}</p>
-                        <p className="text-[10px] text-slate-400">{r.desc}</p>
+                        <p className="font-semibold">{t(r.role, r.label)}</p>
+                        <p className="text-[10px] text-slate-400">{t(r.desc, r.desc)}</p>
                       </div>
                       {user.role === r.role && <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
                     </button>
@@ -175,7 +233,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={isDark ? t('switchToLight', 'Switch to Light Mode') : t('switchToDark', 'Switch to Dark Mode')}
           >
             {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-600" />}
           </button>
@@ -185,7 +243,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
             <button
               onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
               className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative"
-              title="Notifications"
+              title={t('Notifications')}
             >
               <Bell className="w-5 h-5" />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500" />
@@ -198,20 +256,20 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
               >
                 <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
                   <h4 className="text-xs font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                    Notifications
+                    {t('Notifications')}
                   </h4>
                   <span className="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 cursor-pointer">
-                    Mark all read
+                    {t('Mark all read')}
                   </span>
                 </div>
                 <div className="space-y-3 pt-3">
                   <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 text-xs">
-                    <p className="font-semibold text-slate-900 dark:text-slate-100">Daily Attendance Synced</p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Grade 10 attendance processed with 96% presence.</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{t('Daily Attendance Synced')}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{t('Grade 10 attendance processed with 96% presence.')}</p>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 text-xs">
-                    <p className="font-semibold text-slate-900 dark:text-slate-100">Fee Payment Received</p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Receipt RCT-2026-0001 verified for $450.00.</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{t('Fee Payment Received')}</p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{t('Receipt RCT-2026-0001 verified for ৳450.00.')}</p>
                   </div>
                 </div>
               </div>
@@ -233,7 +291,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
                 <span className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-tight">
                   {user.name}
                 </span>
-                <span className="text-[10px] text-slate-400 capitalize">{user.role.toLowerCase()}</span>
+                <span className="text-[10px] text-slate-400 capitalize">{t(user.role, user.role.toLowerCase())}</span>
               </div>
             </button>
 
@@ -255,7 +313,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
                     className="w-full px-4 py-2 text-xs text-left text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2"
                   >
                     <User className="w-4 h-4 text-slate-400" />
-                    My Profile
+                    {t('My Profile')}
                   </button>
                   <button
                     onClick={() => {
@@ -265,7 +323,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
                     className="w-full px-4 py-2 text-xs text-left text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center gap-2"
                   >
                     <Shield className="w-4 h-4 text-slate-400" />
-                    School Settings
+                    {t('School Settings')}
                   </button>
                 </div>
                 <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
@@ -274,7 +332,7 @@ export default function Navbar({ user, onMenuClick }: NavbarProps) {
                     className="w-full px-4 py-2 text-xs text-left text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 flex items-center gap-2 font-medium"
                   >
                     <LogOut className="w-4 h-4" />
-                    Sign Out
+                    {t('Sign Out')}
                   </button>
                 </div>
               </div>
