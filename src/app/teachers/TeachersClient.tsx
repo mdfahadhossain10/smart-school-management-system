@@ -320,7 +320,7 @@ export default function TeachersClient({ user, initialTeachers }: TeachersClient
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Monthly Salary ($)
+                Monthly Salary (৳)
               </label>
               <input
                 type="number"

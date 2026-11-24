@@ -583,7 +583,7 @@ export default function FeesClient({
               >
                 {feeTypes.map((f) => (
                   <option key={f.id} value={f.id}>
-                    {f.name} (${f.amount})
+                    {f.name} (৳{f.amount})
                   </option>
                 ))}
               </select>
@@ -605,7 +605,7 @@ export default function FeesClient({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Total Amount ($)
+                Total Amount (৳)
               </label>
               <input
                 type="number"
@@ -617,7 +617,7 @@ export default function FeesClient({
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Discount / Scholarship ($)
+                Discount / Scholarship (৳)
               </label>
               <input
                 type="number"
@@ -670,7 +670,7 @@ export default function FeesClient({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Payment Amount ($) *
+                Payment Amount (৳) *
               </label>
               <input
                 type="number"
@@ -768,7 +768,7 @@ export default function FeesClient({
             </div>
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Amount ($) *
+                Amount (৳) *
               </label>
               <input
                 type="number"

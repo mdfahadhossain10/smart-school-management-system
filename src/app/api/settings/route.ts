@@ -14,8 +14,8 @@ export async function GET() {
           phone: '+1 (555) 839-2049',
           email: 'info@smartacademy.edu',
           website: 'https://smartacademy.edu',
-          currency: 'USD',
-          currencySymbol: '$',
+          currency: 'BDT',
+          currencySymbol: '৳',
           academicYear: '2026-2027',
         },
       });

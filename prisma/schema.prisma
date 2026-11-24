@@ -558,8 +558,8 @@ model SchoolSettings {
   phone        String   @default("+1 (555) 234-5678")
   email        String   @default("admin@smartacademy.edu")
   website      String   @default("https://smartacademy.edu")
-  currency     String   @default("USD")
-  currencySymbol String @default("$")
+  currency     String   @default("BDT")
+  currencySymbol String @default("৳")
   academicYear String   @default("2026-2027")
   logo         String?
   updatedAt    DateTime @updatedAt

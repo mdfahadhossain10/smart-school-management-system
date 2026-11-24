@@ -258,7 +258,7 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
                 Monthly Income & Expenditure
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Fiscal trajectory over past 6 months (in USD)
+                Fiscal trajectory over past 6 months (in BDT)
               </p>
             </div>
             <div className="flex items-center gap-4 text-xs font-semibold">
@@ -292,7 +292,7 @@ export default function DashboardClient({ user, stats }: DashboardClientProps) {
                   tickLine={false}
                   stroke="#64748b"
                   fontSize={12}
-                  tickFormatter={(val) => `$${val / 1000}k`}
+                  tickFormatter={(val) => `৳${val / 1000}k`}
                 />
                 <Tooltip
                   contentStyle={{
