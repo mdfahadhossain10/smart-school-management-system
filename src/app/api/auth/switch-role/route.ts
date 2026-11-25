@@ -1,39 +1,50 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { createSessionToken } from '@/lib/auth';
+import { createSessionToken, Role } from '@/lib/auth';
+
+const ROLE_DEMO_USERS: Record<Role, { name: string; email: string }> = {
+  SUPER_ADMIN: { name: 'Alexander Wright', email: 'superadmin@smartacademy.edu' },
+  SCHOOL_ADMIN: { name: 'Eleanor Vance', email: 'schooladmin@smartacademy.edu' },
+  PRINCIPAL: { name: 'Dr. Arthur Pendelton', email: 'principal@smartacademy.edu' },
+  TEACHER: { name: 'Sarah Jenkins', email: 'teacher@smartacademy.edu' },
+  STUDENT: { name: 'Ethan Sterling', email: 'student@smartacademy.edu' },
+  PARENT: { name: 'Robert Sterling', email: 'parent@smartacademy.edu' },
+  ACCOUNTANT: { name: 'Franklin Hayes', email: 'accountant@smartacademy.edu' },
+  LIBRARIAN: { name: 'Miriam Becker', email: 'librarian@smartacademy.edu' },
+};
 
 export async function POST(request: Request) {
   try {
     const { role } = await request.json();
 
-    const user = await prisma.user.findFirst({
-      where: { role },
-    });
-
-    if (!user) {
-      return NextResponse.json({ error: `No user found with role ${role}` }, { status: 404 });
+    let user = null;
+    try {
+      user = await prisma.user.findFirst({
+        where: { role },
+      });
+    } catch (dbErr) {
+      console.warn('Switch role DB error, using fallback:', dbErr);
     }
 
+    const fallback = ROLE_DEMO_USERS[role as Role] || {
+      name: `${role.replace('_', ' ')} User`,
+      email: `${role.toLowerCase()}@smartacademy.edu`,
+    };
+
     const sessionPayload = {
-      id: user.id,
-      userId: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role as any,
-      avatar: user.avatar,
+      id: user?.id || `demo-${role.toLowerCase()}`,
+      userId: user?.id || `demo-${role.toLowerCase()}`,
+      email: user?.email || fallback.email,
+      name: user?.name || fallback.name,
+      role: role as any,
+      avatar: user?.avatar || null,
     };
 
     const token = await createSessionToken(sessionPayload);
 
     const response = NextResponse.json({
       success: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-        avatar: user.avatar,
-      },
+      user: sessionPayload,
     });
 
     response.cookies.set('auth_token', token, {
