@@ -47,10 +47,10 @@ async function main() {
     data: {
       email: 'superadmin@smartacademy.edu',
       password: adminPassword,
-      name: 'Alexander Wright',
+      name: 'Fahad Fahim',
       role: 'SUPER_ADMIN',
       phone: '+1 555-0100',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+      avatar: '/avatars/fahad-fahim.jpg',
     },
   });
 
@@ -58,10 +58,10 @@ async function main() {
     data: {
       email: 'schooladmin@smartacademy.edu',
       password: adminPassword,
-      name: 'Victoria Vance',
+      name: 'Fahad Hossain',
       role: 'SCHOOL_ADMIN',
       phone: '+1 555-0101',
-      avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150',
+      avatar: '/avatars/fahad-hossain.jpg',
     },
   });
 

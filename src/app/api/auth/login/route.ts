@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyPassword, createSessionToken, Role } from '@/lib/auth';
 
-const DEMO_FALLBACK_USERS: Record<string, { role: Role; name: string; pass: string }> = {
-  'superadmin@smartacademy.edu': { role: 'SUPER_ADMIN', name: 'Alexander Wright', pass: 'Admin@123' },
-  'schooladmin@smartacademy.edu': { role: 'SCHOOL_ADMIN', name: 'Eleanor Vance', pass: 'Admin@123' },
-  'principal@smartacademy.edu': { role: 'PRINCIPAL', name: 'Dr. Arthur Pendelton', pass: 'Password@123' },
-  'teacher@smartacademy.edu': { role: 'TEACHER', name: 'Sarah Jenkins', pass: 'Password@123' },
-  'student@smartacademy.edu': { role: 'STUDENT', name: 'Ethan Sterling', pass: 'Password@123' },
-  'parent@smartacademy.edu': { role: 'PARENT', name: 'Robert Sterling', pass: 'Password@123' },
-  'accountant@smartacademy.edu': { role: 'ACCOUNTANT', name: 'Franklin Hayes', pass: 'Password@123' },
-  'librarian@smartacademy.edu': { role: 'LIBRARIAN', name: 'Miriam Becker', pass: 'Password@123' },
+const DEMO_FALLBACK_USERS: Record<string, { role: Role; name: string; pass: string; avatar: string }> = {
+  'superadmin@smartacademy.edu': { role: 'SUPER_ADMIN', name: 'Fahad Fahim', pass: 'Admin@123', avatar: '/avatars/fahad-fahim.jpg' },
+  'schooladmin@smartacademy.edu': { role: 'SCHOOL_ADMIN', name: 'Fahad Hossain', pass: 'Admin@123', avatar: '/avatars/fahad-hossain.jpg' },
+  'principal@smartacademy.edu': { role: 'PRINCIPAL', name: 'Dr. Arthur Pendelton', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
+  'teacher@smartacademy.edu': { role: 'TEACHER', name: 'Sarah Jenkins', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+  'student@smartacademy.edu': { role: 'STUDENT', name: 'Ethan Sterling', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150' },
+  'parent@smartacademy.edu': { role: 'PARENT', name: 'Robert Sterling', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' },
+  'accountant@smartacademy.edu': { role: 'ACCOUNTANT', name: 'Franklin Hayes', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150' },
+  'librarian@smartacademy.edu': { role: 'LIBRARIAN', name: 'Miriam Becker', pass: 'Password@123', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150' },
 };
 
 export async function POST(request: Request) {
@@ -96,7 +96,7 @@ export async function POST(request: Request) {
         email: cleanEmail,
         name: demoUser.name,
         role: demoUser.role,
-        avatar: null,
+        avatar: demoUser.avatar,
       };
 
       const token = await createSessionToken(sessionPayload);
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
           email: cleanEmail,
           name: demoUser.name,
           role: demoUser.role,
-          avatar: null,
+          avatar: demoUser.avatar,
         },
       });
 

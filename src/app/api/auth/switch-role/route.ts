@@ -2,15 +2,15 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { createSessionToken, Role } from '@/lib/auth';
 
-const ROLE_DEMO_USERS: Record<Role, { name: string; email: string }> = {
-  SUPER_ADMIN: { name: 'Alexander Wright', email: 'superadmin@smartacademy.edu' },
-  SCHOOL_ADMIN: { name: 'Eleanor Vance', email: 'schooladmin@smartacademy.edu' },
-  PRINCIPAL: { name: 'Dr. Arthur Pendelton', email: 'principal@smartacademy.edu' },
-  TEACHER: { name: 'Sarah Jenkins', email: 'teacher@smartacademy.edu' },
-  STUDENT: { name: 'Ethan Sterling', email: 'student@smartacademy.edu' },
-  PARENT: { name: 'Robert Sterling', email: 'parent@smartacademy.edu' },
-  ACCOUNTANT: { name: 'Franklin Hayes', email: 'accountant@smartacademy.edu' },
-  LIBRARIAN: { name: 'Miriam Becker', email: 'librarian@smartacademy.edu' },
+const ROLE_DEMO_USERS: Record<Role, { name: string; email: string; avatar: string }> = {
+  SUPER_ADMIN: { name: 'Fahad Fahim', email: 'superadmin@smartacademy.edu', avatar: '/avatars/fahad-fahim.jpg' },
+  SCHOOL_ADMIN: { name: 'Fahad Hossain', email: 'schooladmin@smartacademy.edu', avatar: '/avatars/fahad-hossain.jpg' },
+  PRINCIPAL: { name: 'Dr. Arthur Pendelton', email: 'principal@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' },
+  TEACHER: { name: 'Sarah Jenkins', email: 'teacher@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+  STUDENT: { name: 'Ethan Sterling', email: 'student@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150' },
+  PARENT: { name: 'Robert Sterling', email: 'parent@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' },
+  ACCOUNTANT: { name: 'Franklin Hayes', email: 'accountant@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150' },
+  LIBRARIAN: { name: 'Miriam Becker', email: 'librarian@smartacademy.edu', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150' },
 };
 
 export async function POST(request: Request) {
