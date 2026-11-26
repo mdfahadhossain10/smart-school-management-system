@@ -170,6 +170,16 @@ export default function LoginPage() {
             </div>
           </div>
         </div>
+
+        {/* Developer Attribution Footer */}
+        <div className="text-center mt-6 text-xs text-slate-400">
+          <p>
+            Developed by{' '}
+            <span className="text-indigo-400 font-bold tracking-wide">
+              Md Fahad Hossain
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 # 🏫 Smart School Management System (ERP)
 
+> **Developed by Md Fahad Hossain**
+
 A complete, modern, enterprise-grade, responsive School Management & Academic ERP web application engineered with **Next.js 14 (App Router)**, **TypeScript**, **Tailwind CSS**, **Prisma ORM**, **SQLite / PostgreSQL**, **Lucide Icons**, and **Recharts**.
 
 Designed like a commercial SaaS product with full light/dark mode support, role-based access control (RBAC) across 8 distinct institutional roles, responsive sidebar navigation, printable ID cards, report cards, fee receipts, and full CRUD workflows.
@@ -155,6 +157,13 @@ To connect to a hosted PostgreSQL instance or Supabase database:
    - `JWT_SECRET`: A secure random 64-character secret.
    - `NEXT_PUBLIC_APP_NAME`: `Smart School Management System`
 4. Deploy! Vercel will automatically build and serve the application globally with edge caching.
+
+---
+
+## 👨‍💻 Author & Developer
+**Md Fahad Hossain**
+- GitHub: [@mdfahadhossain10](https://github.com/mdfahadhossain10)
+- Live Production: [Smart School ERP](https://smart-school-management-system-lake.vercel.app)
 
 ---
 

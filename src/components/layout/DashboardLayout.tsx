@@ -37,6 +37,15 @@ export default function DashboardLayout({ user, children }: DashboardLayoutProps
           <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
             {children}
           </main>
+
+          <footer className="py-5 px-4 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 dark:text-slate-400">
+            <p>
+              Smart School Management System • Developed by{' '}
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                Md Fahad Hossain
+              </span>
+            </p>
+          </footer>
         </div>
       </div>
     </ToastProvider>

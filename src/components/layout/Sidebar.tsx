@@ -267,8 +267,8 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
           })}
         </div>
 
-        {/* Footer Profile Shortcut */}
-        <div className="p-3 border-t border-slate-800 bg-slate-950/40 shrink-0">
+        {/* Footer Profile Shortcut & Developer Credit */}
+        <div className="p-3 border-t border-slate-800 bg-slate-950/40 shrink-0 space-y-2">
           <Link
             href="/profile"
             className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-800 transition-colors"
@@ -283,6 +283,17 @@ export default function Sidebar({ userRole, isMobileOpen, setIsMobileOpen }: Sid
               </div>
             )}
           </Link>
+
+          {!isCollapsed && (
+            <div className="pt-2 border-t border-slate-800/60 text-center">
+              <span className="text-[10px] text-slate-400 block font-medium">
+                Developed by{' '}
+                <span className="text-indigo-400 font-bold hover:text-indigo-300 transition-colors">
+                  Md Fahad Hossain
+                </span>
+              </span>
+            </div>
+          )}
         </div>
       </aside>
     </>
